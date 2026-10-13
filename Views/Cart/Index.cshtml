@@ -1,0 +1,108 @@
+```cshtml
+@model List<BiteBudget.Models.CartLineViewModel>
+
+@{
+    ViewData["Title"] = "Your Cart";
+    decimal subtotal = Model.Sum(x => x.LineTotal);
+    decimal delivery = Model.Count > 0 ? (subtotal >= 299 ? 0 : 30) : 0;
+    decimal total = subtotal + delivery;
+}
+
+<style>
+    .cart-page { max-width: 1100px; margin: 40px auto; padding: 0 22px 50px; color: #20352b; }
+    .cart-heading { display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap; margin-bottom:28px; }
+    .cart-heading h1 { font-size:36px; margin:0 0 8px; letter-spacing:-1px; }
+    .cart-heading p { margin:0; color:#748075; }
+    .cart-layout { display:grid; grid-template-columns:1.6fr 1fr; gap:25px; align-items:start; }
+    .cart-panel,.cart-summary { background:white; border:1px solid #e7e8df; border-radius:18px; padding:24px; box-shadow:0 8px 28px #183b2510; }
+    .cart-panel h2,.cart-summary h2 { font-size:19px; margin:0 0 20px; }
+    .cart-item { display:flex; justify-content:space-between; align-items:center; gap:15px; padding:18px 0; border-bottom:1px solid #edf0e9; }
+    .cart-item:last-child { border-bottom:0; }
+    .cart-item h3 { margin:0 0 7px; font-size:17px; }
+    .cart-item p { margin:0; color:#758076; font-size:14px; }
+    .cart-price { font-weight:800; font-size:17px; white-space:nowrap; }
+    .cart-remove { display:inline-block; margin-top:10px; color:#b4493f; font-size:13px; text-decoration:none; }
+    .cart-remove:hover { text-decoration:underline; }
+    .cart-summary { background:#fffef9; position:sticky; top:20px; }
+    .cart-row { display:flex; justify-content:space-between; gap:15px; margin:16px 0; color:#657166; font-size:14px; }
+    .cart-row strong { color:#20352b; }
+    .cart-total { border-top:1px solid #e3e6dc; padding-top:18px; margin-top:20px; font-size:19px; font-weight:800; }
+    .cart-note { background:#eef5ed; border-radius:10px; padding:13px; margin:20px 0; font-size:13px; line-height:1.6; color:#3e6549; }
+    .cart-btn { display:block; width:100%; text-align:center; border:0; border-radius:10px; background:#1e4b32; color:white; text-decoration:none; padding:14px; font-size:15px; font-weight:700; cursor:pointer; }
+    .cart-btn:hover { background:#2e6545; color:white; }
+    .cart-continue { display:block; text-align:center; margin-top:15px; color:#315d40; text-decoration:none; font-size:14px; }
+    .cart-empty { text-align:center; padding:55px 20px; }
+    .cart-empty .cart-emoji { font-size:55px; }
+    .cart-empty h2 { margin:15px 0 8px; }
+    .cart-empty p { color:#758076; margin-bottom:25px; }
+    @@media(max-width:760px) {
+        .cart-page { margin-top:25px; }
+        .cart-heading h1 { font-size:29px; }
+        .cart-layout { grid-template-columns:1fr; }
+        .cart-summary { position:static; }
+        .cart-panel,.cart-summary { padding:19px; }
+    }
+</style>
+
+<div class="cart-page">
+    <div class="cart-heading">
+        <div>
+            <h1>Your cart 🛒</h1>
+            <p>Good food, smarter spending.</p>
+        </div>
+        <a asp-controller="Meals" asp-action="Index" class="cart-continue">← Continue shopping</a>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="cart-panel cart-empty">
+            <div class="cart-emoji">🥗</div>
+            <h2>Your cart is waiting</h2>
+            <p>Discover affordable meals that fit your budget.</p>
+            <a asp-controller="Meals" asp-action="Index" class="cart-btn">Explore meals</a>
+        </div>
+    }
+    else
+    {
+        <div class="cart-layout">
+            <section class="cart-panel">
+                <h2>Your items (@Model.Sum(x => x.Quantity))</h2>
+
+                @foreach (var item in Model)
+                {
+                    <div class="cart-item">
+                        <div>
+                            <h3>@item.Meal.Name</h3>
+                            <p>₹@item.Meal.Price.ToString("0.00") each · Quantity: @item.Quantity</p>
+                            <a asp-controller="Cart" asp-action="Remove" asp-route-mealId="@item.Meal.Id"
+                               class="cart-remove">Remove item</a>
+                        </div>
+                        <div class="cart-price">₹@item.LineTotal.ToString("0.00")</div>
+                    </div>
+                }
+            </section>
+
+            <aside class="cart-summary">
+                <h2>Order summary</h2>
+                <div class="cart-row"><span>Subtotal</span><strong>₹@subtotal.ToString("0.00")</strong></div>
+                <div class="cart-row">
+                    <span>Delivery fee</span>
+                    <strong>@(delivery == 0 ? "FREE" : "₹" + delivery.ToString("0.00"))</strong>
+                </div>
+                <div class="cart-row cart-total"><span>Total</span><strong>₹@total.ToString("0.00")</strong></div>
+
+                @if (subtotal < 299)
+                {
+                    <div class="cart-note">🌿 Add ₹@((299 - subtotal).ToString("0.00")) more to qualify for free delivery.</div>
+                }
+                else
+                {
+                    <div class="cart-note">🎉 You unlocked free delivery!</div>
+                }
+
+                <a asp-controller="Cart" asp-action="Checkout" class="cart-btn">Proceed to checkout →</a>
+                <a asp-controller="Meals" asp-action="Index" class="cart-continue">Add more meals</a>
+            </aside>
+        </div>
+    }
+</div>

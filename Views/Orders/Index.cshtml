@@ -1,0 +1,110 @@
+```cshtml
+@model List<BiteBudget.Models.Order>
+
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<style>
+    .history-page { max-width:1050px; margin:40px auto; padding:0 22px 50px; color:#20352b; }
+    .history-hero { background:#1b452f; color:white; padding:30px; border-radius:20px; margin-bottom:28px; position:relative; overflow:hidden; }
+    .history-hero h1 { margin:0 0 10px; font-size:34px; letter-spacing:-1px; }
+    .history-hero p { margin:0; color:#dce8dc; line-height:1.6; }
+    .history-hero .history-mark { position:absolute; right:30px; top:20px; font-size:65px; opacity:.2; }
+    .history-card { background:white; border:1px solid #e7e8df; border-radius:16px; padding:23px; margin-bottom:18px; box-shadow:0 7px 24px #183b250b; }
+    .history-top { display:flex; justify-content:space-between; align-items:start; gap:15px; flex-wrap:wrap; border-bottom:1px solid #edf0e9; padding-bottom:18px; }
+    .history-order-id { color:#6c796e; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+    .history-top h2 { margin:7px 0; font-size:20px; }
+    .history-date { color:#7a857b; font-size:13px; }
+    .history-status { background:#fff1d7; color:#845d17; padding:7px 12px; border-radius:30px; font-size:12px; font-weight:800; white-space:nowrap; }
+    .history-status.paid { background:#e3f4e6; color:#27623a; }
+    .history-details { display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:20px 0; }
+    .history-label { font-size:12px; text-transform:uppercase; letter-spacing:.7px; color:#849084; margin-bottom:7px; }
+    .history-value { font-size:14px; font-weight:600; overflow-wrap:anywhere; line-height:1.6; }
+    .history-items { background:#f8f8f2; border-radius:10px; padding:15px; }
+    .history-item { display:flex; justify-content:space-between; gap:15px; padding:7px 0; font-size:14px; }
+    .history-total { display:flex; justify-content:space-between; gap:15px; border-top:1px solid #e1e5da; margin-top:10px; padding-top:14px; font-weight:800; font-size:17px; }
+    .history-empty { background:white; border:1px solid #e7e8df; border-radius:18px; text-align:center; padding:55px 20px; }
+    .history-empty .empty-icon { font-size:50px; }
+    .history-empty h2 { margin:15px 0 8px; }
+    .history-empty p { color:#778277; margin-bottom:24px; }
+    .history-btn { display:inline-block; background:#1e4b32; color:white; text-decoration:none; padding:13px 20px; border-radius:9px; font-weight:700; font-size:14px; }
+    .history-btn:hover { background:#2e6545; color:white; }
+    @@media(max-width:600px) {
+        .history-page { margin-top:25px; }
+        .history-hero { padding:24px 20px; }
+        .history-hero h1 { font-size:27px; }
+        .history-hero .history-mark { right:15px; font-size:48px; }
+        .history-card { padding:18px; }
+        .history-details { grid-template-columns:1fr; gap:15px; }
+    }
+</style>
+
+<div class="history-page">
+    <section class="history-hero">
+        <div class="history-mark">📦</div>
+        <h1>Your order history</h1>
+        <p>Every order in one place. Check your meals, delivery details and total spending.</p>
+    </section>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="history-empty">
+            <div class="empty-icon">🍽️</div>
+            <h2>No orders yet</h2>
+            <p>Your next favourite meal could be just a few clicks away.</p>
+            <a asp-controller="Meals" asp-action="Index" class="history-btn">Find your first meal</a>
+        </div>
+    }
+    else
+    {
+        @foreach (var order in Model)
+        {
+            <article class="history-card">
+                <div class="history-top">
+                    <div>
+                        <div class="history-order-id">Order #@order.Id</div>
+                        <h2>@order.CustomerName</h2>
+                        <div class="history-date">@order.CreatedAt.ToLocalTime().ToString("dd MMM yyyy, hh:mm tt")</div>
+                    </div>
+                    <span class="history-status @(order.PaymentStatus == "Paid" ? "paid" : "")">
+                        @order.PaymentStatus
+                    </span>
+                </div>
+
+                <div class="history-details">
+                    <div>
+                        <div class="history-label">Delivery address</div>
+                        <div class="history-value">@order.DeliveryAddress</div>
+                    </div>
+                    <div>
+                        <div class="history-label">Payment method</div>
+                        <div class="history-value">@order.PaymentMethod</div>
+                    </div>
+                </div>
+
+                <div class="history-items">
+                    @foreach (var item in order.Items)
+                    {
+                        <div class="history-item">
+                            <span>@item.MealName × @item.Quantity</span>
+                            <strong>₹@((item.UnitPrice * item.Quantity).ToString("0.00"))</strong>
+                        </div>
+                    }
+                    <div class="history-item">
+                        <span>Subtotal</span>
+                        <span>₹@order.Subtotal.ToString("0.00")</span>
+                    </div>
+                    <div class="history-item">
+                        <span>Delivery</span>
+                        <span>₹@order.DeliveryCharge.ToString("0.00")</span>
+                    </div>
+                    <div class="history-total">
+                        <span>Total paid / payable</span>
+                        <span>₹@order.Total.ToString("0.00")</span>
+                    </div>
+                </div>
+            </article>
+        }
+    }
+</div>

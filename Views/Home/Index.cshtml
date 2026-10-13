@@ -1,0 +1,378 @@
+﻿
+@{
+    ViewData["Title"] = "Smart Food Ordering";
+}
+
+<style>
+    .bb-home {
+        background: #f7f7f0;
+        color: #19382d;
+        font-family: Arial, sans-serif;
+        padding-bottom: 55px;
+    }
+
+    .bb-home-container {
+        width: min(1180px, 92%);
+        margin: auto;
+    }
+
+    .bb-hero {
+        background: linear-gradient(120deg, #173e30, #286448);
+        border-radius: 28px;
+        padding: clamp(30px, 6vw, 68px);
+        color: white;
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        align-items: center;
+        gap: 30px;
+        overflow: hidden;
+    }
+
+    .bb-tag {
+        display: inline-block;
+        background: #ffffff18;
+        color: #d5ead9;
+        border: 1px solid #ffffff25;
+        border-radius: 30px;
+        padding: 9px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .6px;
+        margin-bottom: 22px;
+    }
+
+    .bb-hero h1 {
+        font-size: clamp(36px, 5vw, 60px);
+        font-weight: 900;
+        letter-spacing: -2px;
+        line-height: 1.08;
+        margin: 0 0 20px;
+    }
+
+    .bb-hero h1 span { color: #f3c66c; }
+
+    .bb-hero p {
+        color: #d5e4d9;
+        line-height: 1.8;
+        font-size: 15px;
+        max-width: 510px;
+        margin-bottom: 28px;
+    }
+
+    .bb-home-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .bb-home-btn {
+        display: inline-block;
+        text-decoration: none;
+        padding: 15px 21px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 800;
+        transition: .2s;
+    }
+
+    .bb-home-btn:hover { transform: translateY(-3px); }
+
+    .bb-home-btn-primary {
+        background: #f3c66c;
+        color: #19382d;
+    }
+
+    .bb-home-btn-secondary {
+        color: white;
+        border: 1px solid #ffffff60;
+    }
+
+    .bb-home-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 280px;
+    }
+
+    .bb-food-orbit {
+        width: min(280px, 75vw);
+        height: min(280px, 75vw);
+        border: 1px solid #ffffff40;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        position: relative;
+        background: radial-gradient(circle, #ffffff19, #ffffff03 65%);
+    }
+
+    .bb-food-main {
+        width: 175px;
+        height: 175px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #ffffff16;
+        font-size: 100px;
+        box-shadow: 0 20px 50px #00000015;
+    }
+
+    .bb-food-bubble {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: 57px;
+        height: 57px;
+        border-radius: 18px;
+        background: #fff9e9;
+        font-size: 28px;
+        box-shadow: 0 10px 25px #00000020;
+    }
+
+    .bb-bubble-one { top: 8px; right: 25px; }
+    .bb-bubble-two { bottom: 18px; left: 5px; }
+    .bb-bubble-three { bottom: 12px; right: 8px; }
+
+    .bb-home-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin: 25px 0 55px;
+    }
+
+    .bb-home-stat {
+        background: white;
+        border: 1px solid #e7eadf;
+        border-radius: 18px;
+        padding: 22px;
+        text-align: center;
+    }
+
+    .bb-home-stat strong {
+        display: block;
+        font-size: 24px;
+        font-weight: 900;
+        margin-bottom: 8px;
+    }
+
+    .bb-home-stat span {
+        color: #718078;
+        font-size: 13px;
+    }
+
+    .bb-home-section { margin-top: 45px; }
+
+    .bb-home-section h2 {
+        font-size: clamp(25px, 4vw, 34px);
+        font-weight: 900;
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+    }
+
+    .bb-home-section > p {
+        color: #718078;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+    .bb-feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .bb-feature {
+        background: white;
+        border: 1px solid #e7eadf;
+        border-radius: 20px;
+        padding: 25px;
+        transition: .2s;
+    }
+
+    .bb-feature:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px #203d2610;
+    }
+
+    .bb-feature-icon {
+        width: 53px;
+        height: 53px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        background: #e7f3e7;
+        font-size: 27px;
+        margin-bottom: 20px;
+    }
+
+    .bb-feature h3 {
+        font-size: 18px;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .bb-feature p {
+        color: #718078;
+        font-size: 13px;
+        line-height: 1.8;
+        margin: 0;
+    }
+
+    .bb-cta {
+        background: #e7f0e3;
+        border-radius: 24px;
+        padding: clamp(25px, 5vw, 42px);
+        margin-top: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .bb-cta h2 {
+        font-size: 25px;
+        font-weight: 900;
+        margin-bottom: 8px;
+    }
+
+    .bb-cta p {
+        color: #61766a;
+        font-size: 14px;
+        margin: 0;
+        line-height: 1.7;
+    }
+
+    @@media (max-width: 760px) {
+        .bb-hero {
+            grid-template-columns: 1fr;
+            padding: 30px 24px;
+        }
+
+        .bb-home-visual { min-height: 220px; }
+
+        .bb-food-orbit {
+            width: 220px;
+            height: 220px;
+        }
+
+        .bb-food-main {
+            width: 140px;
+            height: 140px;
+            font-size: 78px;
+        }
+
+        .bb-home-stats { gap: 9px; }
+        .bb-home-stat { padding: 16px 8px; }
+        .bb-home-stat strong { font-size: 20px; }
+        .bb-home-stat span { font-size: 11px; }
+        .bb-feature-grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="bb-home">
+    <div class="bb-home-container">
+
+        <section class="bb-hero">
+            <div>
+                <div class="bb-tag">🥗 SMART FOOD ORDERING SYSTEM</div>
+
+                <h1>
+                    Eat better.<br />
+                    Spend <span>smarter.</span>
+                </h1>
+
+                <p>
+                    Your cravings, your budget, your choice.
+                    Discover affordable meals, compare nutrition and order
+                    your favourites in just a few clicks.
+                </p>
+
+                <div class="bb-home-actions">
+                    <a asp-controller="Meals" asp-action="Index"
+                       class="bb-home-btn bb-home-btn-primary">
+                        Explore Meals →
+                    </a>
+
+                    <a asp-controller="Cart" asp-action="Index"
+                       class="bb-home-btn bb-home-btn-secondary">
+                        View Cart 🛒
+                    </a>
+                </div>
+            </div>
+
+            <div class="bb-home-visual">
+                <div class="bb-food-orbit">
+                    <div class="bb-food-main">🍱</div>
+                    <div class="bb-food-bubble bb-bubble-one">🥑</div>
+                    <div class="bb-food-bubble bb-bubble-two">🥗</div>
+                    <div class="bb-food-bubble bb-bubble-three">🍓</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bb-home-stats">
+            <div class="bb-home-stat">
+                <strong>₹70+</strong>
+                <span>Affordable meal options</span>
+            </div>
+            <div class="bb-home-stat">
+                <strong>Smart</strong>
+                <span>Budget-based filtering</span>
+            </div>
+            <div class="bb-home-stat">
+                <strong>Simple</strong>
+                <span>Easy checkout experience</span>
+            </div>
+        </section>
+
+        <section class="bb-home-section">
+            <h2>Everything you need to eat smart</h2>
+            <p>
+                A simple way to find food that fits your lifestyle and budget.
+            </p>
+
+            <div class="bb-feature-grid">
+                <article class="bb-feature">
+                    <div class="bb-feature-icon">💰</div>
+                    <h3>Budget-first choices</h3>
+                    <p>
+                        Set your maximum spending limit and filter meals
+                        to discover options that fit your budget.
+                    </p>
+                </article>
+
+                <article class="bb-feature">
+                    <div class="bb-feature-icon">🥦</div>
+                    <h3>Nutrition at a glance</h3>
+                    <p>
+                        Compare listed calories and protein values
+                        while exploring the menu.
+                    </p>
+                </article>
+
+                <article class="bb-feature">
+                    <div class="bb-feature-icon">📦</div>
+                    <h3>Easy order tracking</h3>
+                    <p>
+                        Add meals to your cart, complete checkout and
+                        review previously recorded orders.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="bb-cta">
+            <div>
+                <h2>Ready to find your next meal?</h2>
+                <p>Explore the menu and find an option that works for you.</p>
+            </div>
+
+            <a asp-controller="Meals" asp-action="Index"
+               class="bb-home-btn bb-home-btn-primary"
+               style="background:#287451;color:white;">
+                Find My Meal →
+            </a>
+        </section>
+
+    </div>
+</div>

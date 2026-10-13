@@ -1,0 +1,46 @@
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container py-5" style="max-width:720px">
+    <h1 class="fw-bold">Checkout</h1>
+    <p class="text-muted">Confirm your delivery details and order total.</p>
+
+    <div class="card p-4 mt-4">
+        <form asp-action="Checkout" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label for="customerName" class="form-label">Full name</label>
+                <input id="customerName" name="customerName"
+                       class="form-control" required maxlength="100" />
+            </div>
+
+            <div class="mb-3">
+                <label for="deliveryAddress" class="form-label">Delivery address</label>
+                <textarea id="deliveryAddress" name="deliveryAddress"
+                          class="form-control" rows="3"
+                          required maxlength="500"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="paymentMethod" class="form-label">Payment method</label>
+                <select id="paymentMethod" name="paymentMethod" class="form-select">
+                    <option value="Pay on Delivery">Pay on Delivery</option>
+                    <option value="Demo Online Payment">Demo Online Payment (simulation)</option>
+                </select>
+            </div>
+
+            <div class="alert alert-light border">
+                <strong>Subtotal:</strong> ₹@ViewBag.Subtotal<br />
+                <strong>Delivery:</strong> @(Convert.ToDecimal(ViewBag.Subtotal) >= 300 ? "FREE" : "₹30")<br />
+                <small class="text-muted">Free delivery on orders of ₹300 or more.</small>
+            </div>
+
+            <button class="btn btn-success btn-lg w-100" type="submit">
+                Place order →
+            </button>
+        </form>
+    </div>
+</div>

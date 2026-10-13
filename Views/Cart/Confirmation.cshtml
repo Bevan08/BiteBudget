@@ -1,0 +1,43 @@
+
+@model BiteBudget.Models.Order
+
+@{
+    ViewData["Title"] = "Order Confirmed";
+}
+
+<div class="container py-5" style="max-width:760px">
+    <div class="card p-4 p-md-5 text-center">
+        <div style="font-size:56px">✅</div>
+        <h1 class="fw-bold mt-3">Order placed!</h1>
+        <p class="text-muted">Thank you, @Model.CustomerName. Your demo order has been saved.</p>
+
+        <div class="alert alert-success mt-3">
+            <strong>Order number:</strong> #@Model.Id<br />
+            <strong>Payment:</strong> @Model.PaymentMethod<br />
+            <strong>Payment status:</strong> @Model.PaymentStatus
+        </div>
+
+        <div class="text-start mt-3">
+            <h5>Order items</h5>
+            @foreach (var item in Model.Items)
+            {
+                <div class="d-flex justify-content-between border-bottom py-2 gap-3">
+                    <span>@item.MealName × @item.Quantity</span>
+                    <strong>₹@(item.UnitPrice * item.Quantity)</strong>
+                </div>
+            }
+            <p class="d-flex justify-content-between mt-3">
+                <span>Subtotal</span><strong>₹@Model.Subtotal</strong>
+            </p>
+            <p class="d-flex justify-content-between">
+                <span>Delivery</span><strong>₹@Model.DeliveryCharge</strong>
+            </p>
+            <h4 class="d-flex justify-content-between">
+                <span>Total</span><strong>₹@Model.Total</strong>
+            </h4>
+        </div>
+
+        <a asp-controller="Meals" asp-action="Index"
+           class="btn btn-success mt-4">Order more meals</a>
+    </div>
+</div>

@@ -1,0 +1,157 @@
+﻿```cshtml
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BiteBudget</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f7f2;
+            color: #20352b;
+        }
+
+        .bb-navbar {
+            background: #173d2b;
+            color: white;
+            padding: 0 5%;
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid #d6b978;
+        }
+
+        .bb-brand {
+            color: #f4d99b;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -0.7px;
+            white-space: nowrap;
+        }
+
+        .bb-brand span {
+            color: white;
+        }
+
+        .bb-nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 7px;
+            flex-wrap: wrap;
+            padding: 12px 0;
+        }
+
+        .bb-nav a {
+            color: #f6f5ef;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 11px 13px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .bb-nav a:hover {
+            background: #2c5a40;
+            color: #f4d99b;
+        }
+
+        .bb-nav .bb-cart-link {
+            background: #f0d59a;
+            color: #173d2b;
+        }
+
+        .bb-nav .bb-cart-link:hover {
+            background: #ffe7ad;
+            color: #173d2b;
+        }
+
+        .bb-main {
+            min-height: calc(100vh - 150px);
+        }
+
+        .bb-footer {
+            background: #173d2b;
+            color: #d8e3da;
+            padding: 22px 5%;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .bb-footer a {
+            color: #f4d99b;
+            text-decoration: none;
+        }
+
+        .bb-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @@media (max-width: 760px) {
+            .bb-navbar {
+                padding: 16px 5%;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .bb-nav {
+                width: 100%;
+                gap: 4px;
+                padding: 4px 0;
+            }
+
+            .bb-nav a {
+                padding: 9px 10px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bb-navbar">
+        <a class="bb-brand" asp-controller="Home" asp-action="Index">
+            Bite<span>Budget</span>
+        </a>
+
+        <nav class="bb-nav">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-controller="Meals" asp-action="Index">Find Meals</a>
+            <a asp-controller="Admin" asp-action="Index">Dashboard</a>
+            <a asp-controller="Cart" asp-action="Index" class="bb-cart-link">
+                🛒 Cart
+            </a>
+            <a asp-controller="Orders" asp-action="Index">Order History</a>
+            <a asp-controller="Privacy" asp-action="Index">Privacy Policy</a>
+        </nav>
+    </header>
+
+    <main class="bb-main">
+        @RenderBody()
+    </main>
+
+    <footer class="bb-footer">
+        <div>© @DateTime.Now.Year BiteBudget · Eat better. Spend smarter.</div>
+        <div>
+            Smart meals, thoughtful spending.
+            <a asp-controller="Privacy" asp-action="Index">Privacy Policy</a>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

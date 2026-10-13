@@ -1,0 +1,101 @@
+```cshtml
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<style>
+    .privacy-page { max-width:950px; margin:40px auto; padding:0 22px 55px; color:#20352b; }
+    .privacy-hero { background:#1b452f; color:white; padding:35px; border-radius:20px; margin-bottom:25px; }
+    .privacy-hero .privacy-icon { font-size:36px; margin-bottom:12px; }
+    .privacy-hero h1 { font-size:35px; margin:0 0 10px; letter-spacing:-1px; }
+    .privacy-hero p { color:#dce8dc; line-height:1.7; margin:0; max-width:650px; }
+    .privacy-updated { display:inline-block; margin-top:18px; background:#2d5a40; color:#f2dfb4; padding:7px 11px; border-radius:7px; font-size:12px; }
+    .privacy-content { display:grid; grid-template-columns:210px 1fr; gap:24px; align-items:start; }
+    .privacy-nav,.privacy-section { background:white; border:1px solid #e7e8df; border-radius:15px; padding:22px; }
+    .privacy-nav { position:sticky; top:20px; }
+    .privacy-nav h3 { margin:0 0 14px; font-size:15px; }
+    .privacy-nav a { display:block; text-decoration:none; color:#526658; padding:9px 0; font-size:13px; border-bottom:1px solid #edf0e9; }
+    .privacy-nav a:last-child { border-bottom:0; }
+    .privacy-nav a:hover { color:#1b7040; }
+    .privacy-section { margin-bottom:16px; scroll-margin-top:20px; }
+    .privacy-section h2 { font-size:19px; margin:0 0 12px; }
+    .privacy-section p,.privacy-section li { color:#637064; font-size:14px; line-height:1.85; }
+    .privacy-section p { margin:0 0 10px; }
+    .privacy-section ul { padding-left:20px; margin:8px 0 0; }
+    .privacy-note { background:#eef5ed; border-radius:10px; padding:15px; color:#365b40; font-size:13px; line-height:1.7; margin-top:14px; }
+    .privacy-back { display:inline-block; margin-top:8px; color:#315d40; text-decoration:none; font-weight:700; font-size:14px; }
+    @@media(max-width:700px) {
+        .privacy-page { margin-top:25px; }
+        .privacy-hero { padding:25px 21px; }
+        .privacy-hero h1 { font-size:28px; }
+        .privacy-content { grid-template-columns:1fr; }
+        .privacy-nav { position:static; }
+    }
+</style>
+
+<div class="privacy-page">
+    <section class="privacy-hero">
+        <div class="privacy-icon">🔒</div>
+        <h1>Privacy Policy</h1>
+        <p>Your privacy matters. This page explains how the BiteBudget demonstration application handles information when you browse meals and place sample orders.</p>
+        <span class="privacy-updated">Last updated: 11 October 2026</span>
+    </section>
+
+    <div class="privacy-content">
+        <aside class="privacy-nav">
+            <h3>On this page</h3>
+            <a href="#information">Information collected</a>
+            <a href="#usage">How information is used</a>
+            <a href="#storage">Data storage</a>
+            <a href="#payments">Payments</a>
+            <a href="#security">Security</a>
+            <a href="#contact">Contact and questions</a>
+        </aside>
+
+        <div>
+            <section class="privacy-section" id="information">
+                <h2>1. Information collected</h2>
+                <p>BiteBudget may store information you enter when placing an order, such as your name, delivery address, selected meals, quantities and order totals.</p>
+                <p>The application also stores order records needed to display your order history.</p>
+            </section>
+
+            <section class="privacy-section" id="usage">
+                <h2>2. How information is used</h2>
+                <p>Information entered into the application is used to demonstrate meal selection, cart management, checkout and order history features.</p>
+                <ul>
+                    <li>Display your selected meals and estimated costs.</li>
+                    <li>Create and display order records.</li>
+                    <li>Calculate order subtotals, delivery charges and totals.</li>
+                </ul>
+            </section>
+
+            <section class="privacy-section" id="storage">
+                <h2>3. Data storage and retention</h2>
+                <p>This project uses a local SQLite database for meal and order records. Depending on how the application is hosted, its developer or hosting provider may have access to stored information.</p>
+                <p>Records may remain in the database until they are removed by the application administrator or the database is reset.</p>
+            </section>
+
+            <section class="privacy-section" id="payments">
+                <h2>4. Payments</h2>
+                <p>BiteBudget is a demonstration project. Any simulated online payment option does not, by itself, process a real payment or charge a bank account.</p>
+                <p>Do not enter real card details, passwords, banking credentials or other sensitive payment information into this demo.</p>
+            </section>
+
+            <section class="privacy-section" id="security">
+                <h2>5. Security and responsible use</h2>
+                <p>Reasonable safeguards should be added before deploying this application for real customers. The demonstration version should not be treated as a fully audited commercial ordering service.</p>
+                <div class="privacy-note">
+                    <strong>Good practice:</strong> Use test information while developing BiteBudget. Before public deployment, configure secure hosting, access controls, data retention procedures and a real privacy review.
+                </div>
+            </section>
+
+            <section class="privacy-section" id="contact">
+                <h2>6. Contact and questions</h2>
+                <p>For questions about this demonstration project or its stored data, contact the person or organisation operating the BiteBudget application.</p>
+                <p>This policy describes the intended demo behaviour. Update it to reflect actual hosting, data handling and contact details before using the application commercially.</p>
+            </section>
+
+            <a asp-controller="Home" asp-action="Index" class="privacy-back">← Back to BiteBudget</a>
+        </div>
+    </div>
+</div>
